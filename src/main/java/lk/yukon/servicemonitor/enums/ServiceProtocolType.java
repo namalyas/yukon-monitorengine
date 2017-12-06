@@ -11,8 +11,8 @@ package lk.yukon.servicemonitor.enums;
  */
 public enum ServiceProtocolType {
 
-    TCP,
-    HTTP,
-    FTP,
-    SMTP;
+    SERVICE_PROTOCOL_TYPE_TCP,
+    SERVICE_PROTOCOL_TYPE_HTTP,
+    SERVICE_PROTOCOL_TYPE_FTP,
+    SERVICE_PROTOCOL_TYPE_SMTP;
 }
