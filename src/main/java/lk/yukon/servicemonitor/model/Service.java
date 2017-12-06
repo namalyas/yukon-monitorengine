@@ -6,7 +6,7 @@ import lk.yukon.servicemonitor.enums.ServiceRunningStatus;
 /**
  * license: BSD - see LICENSE for details
  *
- * Service represent the real world service entity
+ * Service represent the real world manager entity
  *
  * @author Namal Weheragoda
  * @version 1.0.0
@@ -20,9 +20,9 @@ public class Service {
 
 
     /**
-     * @param serviceUID Unique Id representing the service
-     * @param host host of the service
-     * @param port port of the service
+     * @param serviceUID Unique Id representing the manager
+     * @param host host of the manager
+     * @param port port of the manager
      */
     public Service(String serviceUID, String host, int port) {
         this.serviceUID = serviceUID;
@@ -34,10 +34,10 @@ public class Service {
 
 
     /**
-     * @param serviceUID Unique Id representing the service
-     * @param host host of the service
-     * @param port port of the service
-     * @param serviceRunningStatus service running status
+     * @param serviceUID Unique Id representing the manager
+     * @param host host of the manager
+     * @param port port of the manager
+     * @param serviceRunningStatus manager running status
      */
     public Service(String serviceUID, String host, int port, ServiceRunningStatus serviceRunningStatus) {
         this.serviceUID = serviceUID;
@@ -48,11 +48,11 @@ public class Service {
     }
 
     /**
-     * @param serviceUID Unique Id representing the service
-     * @param host host of the service
-     * @param port port of the service
-     * @param serviceRunningStatus service running status
-     * @param serviceProtocolType service communicating protocol
+     * @param serviceUID Unique Id representing the manager
+     * @param host host of the manager
+     * @param port port of the manager
+     * @param serviceRunningStatus manager running status
+     * @param serviceProtocolType manager communicating protocol
      */
     public Service(String serviceUID, String host, int port, ServiceRunningStatus serviceRunningStatus, ServiceProtocolType serviceProtocolType) {
         this.serviceUID = serviceUID;
