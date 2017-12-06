@@ -13,4 +13,6 @@ This repo contains service monitor server
 <ul>service name unique check uuid</ul>
 <ul>add units in comments</ul>
 <ul>add LOGGERS</ul>
-<ul>add syncronizations related stuff</ul>
+<ul>add syncronizations related stuff specially serviceconfigurationmanager</ul>
+<ul>check access modifiers of each and every service</ul>
+<ul>remove unwanted imports</ul>

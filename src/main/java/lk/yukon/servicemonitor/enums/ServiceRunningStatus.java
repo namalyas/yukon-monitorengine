@@ -3,7 +3,7 @@ package lk.yukon.servicemonitor.enums;
 /**
  * license: BSD - see LICENSE for details
  *
- * ServiceRunningStatus Enum contains manager running status.
+ * ServiceRunningStatus Enum contains service running status.
  *
  * @author Namal Weheragoda
  * @version 1.0.0

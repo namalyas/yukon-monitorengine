@@ -1,4 +1,4 @@
-package lk.yukon.servicemonitor.manager;
+package lk.yukon.servicemonitor.service;
 
 import junit.framework.TestCase;
 import lk.yukon.servicemonitor.model.Service;

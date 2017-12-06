@@ -1,4 +1,4 @@
-package lk.yukon.servicemonitor.manager;
+package lk.yukon.servicemonitor.service;
 
 import lk.yukon.servicemonitor.configuration.ApplicationConstant;
 import lk.yukon.servicemonitor.enums.ServiceRunningStatus;
@@ -181,7 +181,7 @@ public class ServiceConfigurationManager {
     /**
      * This method is for watching service status change (service not running) and notify to listeners
      */
-    public void markServiceDown(){
+    public void markServiceNotRunning(){
         ServiceRunningStatus servicePreviousRunningStatus=service.getServiceRunningStatus();
         if(0==getGracePeriod()||(getLastRuningtimeWithGracePeriod() >= getLastRuningtimeWithPollingFrequency())) {
             service.setServiceRunningStatus(ServiceRunningStatus.SERVICE_RUNNING_STATUS_NOT_RUNNING);

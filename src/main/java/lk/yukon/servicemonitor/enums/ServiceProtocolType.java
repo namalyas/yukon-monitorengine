@@ -3,7 +3,7 @@ package lk.yukon.servicemonitor.enums;
 /**
  * license: BSD - see LICENSE for details
  *
- * ServiceProtocolType Enum contains manager protocol types. In the future more serviceTypes will be added.
+ * ServiceProtocolType Enum contains service protocol types. In the future more serviceTypes will be added.
  * This Enum is added for future implementation purposes.
  *
  * @author Namal Weheragoda
