@@ -16,3 +16,4 @@ This repo contains service monitor server
 <ul>add syncronizations related stuff specially serviceconfigurationmanager</ul>
 <ul>check access modifiers of each and every service</ul>
 <ul>remove unwanted imports</ul>
+<ul>check java versions</ul>
