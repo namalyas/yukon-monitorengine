@@ -1,4 +1,4 @@
-package lk.yukon;
+package lk.yukon.servicemonitor;
 
 /**
  * Hello world!
