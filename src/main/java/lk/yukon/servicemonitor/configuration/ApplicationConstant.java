@@ -10,7 +10,7 @@ package lk.yukon.servicemonitor.configuration;
  */
 public class ApplicationConstant {
     public static final int CONSTANT_DEFAULT_GRACE_PERIOD=0;
-    public static final int CONSTANT_DEFAULT_SERVER_FREQUENCY_TIME=1000;
+    public static final int CONSTANT_MILI_SEC_TO_SEC_MULTIFICATION_FACTOR=1000;
 
 
 }

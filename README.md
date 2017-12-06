@@ -10,3 +10,7 @@ This repo contains service monitor server
 # task to do
 
 <ul>add exception for incorrect Service - ex: port missing/ polling time missing</ul>
+<ul>service name unique check uuid</ul>
+<ul>add units in comments</ul>
+<ul>add LOGGERS</ul>
+<ul>add syncronizations related stuff</ul>
