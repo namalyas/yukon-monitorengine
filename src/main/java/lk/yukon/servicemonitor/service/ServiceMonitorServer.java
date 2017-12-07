@@ -3,7 +3,9 @@ package lk.yukon.servicemonitor.service;
 import lk.yukon.servicemonitor.configuration.ApplicationConstant;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -20,13 +22,13 @@ public class ServiceMonitorServer extends Thread {
 
     private boolean isServerRun;
     private ExecutorService executorThreadPool;
-    private List<ServiceConfigurationManager> serviceConfigurationManagerLists;
+    private Map<String,ServiceConfigurationManager> serviceConfigurationManagerMap;
     private long lastRunningTime;
 
     public ServiceMonitorServer(){
         this.isServerRun=true;
         this.executorThreadPool= Executors.newCachedThreadPool();
-        this.serviceConfigurationManagerLists=new ArrayList<ServiceConfigurationManager>();
+        this.serviceConfigurationManagerMap=new HashMap<String, ServiceConfigurationManager>();
         this.lastRunningTime=ApplicationConstant.CONSTANT_DEFAULT_ZERO;
 
     }
@@ -53,7 +55,7 @@ public class ServiceMonitorServer extends Thread {
                 e.printStackTrace();
             }
 
-            for(ServiceConfigurationManager serviceConfigurationManager:serviceConfigurationManagerLists){
+            for(ServiceConfigurationManager serviceConfigurationManager: getServiceConfigurationManagerMap().values()){
                 if (isServiceEligibleForCheck(serviceConfigurationManager)) {
                     serviceConfigurationManager.updateLastRuningtime();
                     executorThreadPool.submit(new ServiceMonitorAgent(serviceConfigurationManager));
@@ -83,13 +85,7 @@ public class ServiceMonitorServer extends Thread {
         this.executorThreadPool = executorThreadPool;
     }
 
-    public List<ServiceConfigurationManager> getServiceConfigurationManagerLists() {
-        return serviceConfigurationManagerLists;
-    }
 
-    public void setServiceConfigurationManagerLists(List<ServiceConfigurationManager> serviceConfigurationManagerLists) {
-        this.serviceConfigurationManagerLists = serviceConfigurationManagerLists;
-    }
 
     public long getLastRunningTime() {
         return lastRunningTime;
@@ -103,22 +99,19 @@ public class ServiceMonitorServer extends Thread {
         isServerRun=false;
     }
 
-    public void addServiceConfigurationManager(ServiceConfigurationManager serviceConfigurationManager){
-        serviceConfigurationManagerLists.add(serviceConfigurationManager);
+    public ServiceConfigurationManager addServiceConfigurationManager(ServiceConfigurationManager serviceConfigurationManager){
+       return serviceConfigurationManagerMap.put(serviceConfigurationManager.getService().getServiceUID(),serviceConfigurationManager);
     }
 
-    public void removeServiceConfigurationManager(ServiceConfigurationManager serviceConfigurationManager){
-        serviceConfigurationManagerLists.remove(serviceConfigurationManager);
+    public ServiceConfigurationManager removeServiceConfigurationManager(ServiceConfigurationManager serviceConfigurationManager){
+        return serviceConfigurationManagerMap.remove(serviceConfigurationManager.getService().getServiceUID());
     }
 
+    public Map<String, ServiceConfigurationManager> getServiceConfigurationManagerMap() {
+        return serviceConfigurationManagerMap;
+    }
 
-    @Override
-    public String toString() {
-        return "ServiceMonitorServer{" +
-                "isServerRun=" + isServerRun +
-                ", executorThreadPool=" + executorThreadPool +
-                ", serviceConfigurationManagerLists=" + serviceConfigurationManagerLists +
-                ", lastRunningTime=" + lastRunningTime +
-                '}';
+    public void setServiceConfigurationManagerMap(Map<String, ServiceConfigurationManager> serviceConfigurationManagerMap) {
+        this.serviceConfigurationManagerMap = serviceConfigurationManagerMap;
     }
 }

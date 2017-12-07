@@ -6,6 +6,8 @@ This repo contains service monitor server
 
 <ul>service protocol types added for future enhansments</ul>
 <ul>add more outage times to single serverce</ul>
+<ul>add service checking priorities</ul>
+<ul>its better in the future to limit port range not only port 0</ul>
 
 # extra things did
 
@@ -16,7 +18,7 @@ This repo contains service monitor server
 # task to do
 
 <ul>add exception for incorrect Service - ex: port missing/ polling time missing - done</ul>
-<ul>service name unique check uuid</ul>
+<ul>service name unique check uuid- done</ul>
 <ul>add units in comments</ul>
 <ul>add LOGGERS</ul>
 <ul>add syncronizations related stuff specially serviceconfigurationmanager</ul>
@@ -25,4 +27,4 @@ This repo contains service monitor server
 <ul>check java versions</ul>
 <ul>replace 0 with constant</ul>
 <ul>outage time feature</ul>
-<ul>mark port 0 is not supported / its better in the future its better to limit port range</ul>
+<ul>mark port 0 is not supported  - done </ul>
