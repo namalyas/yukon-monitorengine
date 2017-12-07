@@ -7,10 +7,15 @@ This repo contains service monitor server
 <ul>service protocol types added for future enhansments</ul>
 <ul>add more outage times to single serverce</ul>
 
+# extra things did
+
+<ul>ServiceBehaviourAdaptor</ul>
+<ul>TDD approach to build complex logics in simplify way</ul>
+<ul>Exception hirachi for finer exceptions</ul>
 
 # task to do
 
-<ul>add exception for incorrect Service - ex: port missing/ polling time missing</ul>
+<ul>add exception for incorrect Service - ex: port missing/ polling time missing - done</ul>
 <ul>service name unique check uuid</ul>
 <ul>add units in comments</ul>
 <ul>add LOGGERS</ul>
