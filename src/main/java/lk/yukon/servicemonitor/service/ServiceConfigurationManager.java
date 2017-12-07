@@ -2,6 +2,7 @@ package lk.yukon.servicemonitor.service;
 
 import lk.yukon.servicemonitor.configuration.ApplicationConstant;
 import lk.yukon.servicemonitor.enums.ServiceRunningStatus;
+import lk.yukon.servicemonitor.exception.UnsupportedServiceConfigurationManagerParameterException;
 import lk.yukon.servicemonitor.listener.ServiceBehaviourListener;
 import lk.yukon.servicemonitor.model.Service;
 
@@ -34,14 +35,20 @@ public class ServiceConfigurationManager {
      * @param pollingFrequency frequency of polling action
      * @param gracePeriod waiting time to check once again if service is down
      */
-    public ServiceConfigurationManager(Service service, int pollingFrequency, int gracePeriod) {
-        this.service = service;
-        this.pollingFrequency = pollingFrequency;
-        this.gracePeriod = gracePeriod;
-        this.serviceBehaviourListenerList=new ArrayList<ServiceBehaviourListener>();
-        this.lastRuningTime=0;
-        this.lastRuningtimeWithPollingFrequency=0;
-        this.lastRuningtimeWithGracePeriod=0;
+    public ServiceConfigurationManager(Service service, int pollingFrequency, int gracePeriod) throws UnsupportedServiceConfigurationManagerParameterException {
+        if(null==service||0==pollingFrequency){
+            throw new UnsupportedServiceConfigurationManagerParameterException("service :"+service+", pollingFrequency :"+pollingFrequency);
+        }else{
+            this.service = service;
+            this.pollingFrequency = pollingFrequency;
+            this.gracePeriod = gracePeriod;
+            this.serviceBehaviourListenerList=new ArrayList<ServiceBehaviourListener>();
+            this.lastRuningTime=0;
+            this.lastRuningtimeWithPollingFrequency=0;
+            this.lastRuningtimeWithGracePeriod=0;
+        }
+
+
     }
 
     /**
@@ -51,14 +58,18 @@ public class ServiceConfigurationManager {
      * @param gracePeriod waiting time to check once again if service is down
      * @param serviceBehaviourListenerList list holding the servicebehaviourlisteners
      */
-    public ServiceConfigurationManager(Service service, int pollingFrequency, int gracePeriod, List<ServiceBehaviourListener> serviceBehaviourListenerList) {
-        this.service = service;
-        this.pollingFrequency = pollingFrequency;
-        this.gracePeriod = gracePeriod;
-        this.serviceBehaviourListenerList = serviceBehaviourListenerList;
-        this.lastRuningTime=0;
-        this.lastRuningtimeWithPollingFrequency=0;
-        this.lastRuningtimeWithGracePeriod=0;
+    public ServiceConfigurationManager(Service service, int pollingFrequency, int gracePeriod, List<ServiceBehaviourListener> serviceBehaviourListenerList) throws UnsupportedServiceConfigurationManagerParameterException{
+        if(null==service||0==pollingFrequency){
+            throw new UnsupportedServiceConfigurationManagerParameterException("service :"+service+", pollingFrequency :"+pollingFrequency);
+        }else {
+            this.service = service;
+            this.pollingFrequency = pollingFrequency;
+            this.gracePeriod = gracePeriod;
+            this.serviceBehaviourListenerList = serviceBehaviourListenerList;
+            this.lastRuningTime = 0;
+            this.lastRuningtimeWithPollingFrequency = 0;
+            this.lastRuningtimeWithGracePeriod = 0;
+        }
     }
 
 
@@ -66,16 +77,24 @@ public class ServiceConfigurationManager {
         return service;
     }
 
-    public void setService(Service service) {
-        this.service = service;
+    public void setService(Service service) throws UnsupportedServiceConfigurationManagerParameterException {
+        if(null==service){
+            throw new UnsupportedServiceConfigurationManagerParameterException("service :"+service);
+        }else {
+            this.service = service;
+        }
     }
 
     public int getPollingFrequency() {
         return pollingFrequency;
     }
 
-    public void setPollingFrequency(int pollingFrequency) {
-        this.pollingFrequency = pollingFrequency;
+    public void setPollingFrequency(int pollingFrequency) throws UnsupportedServiceConfigurationManagerParameterException{
+        if(0==pollingFrequency){
+            throw new UnsupportedServiceConfigurationManagerParameterException("pollingFrequency :"+pollingFrequency);
+        }else {
+            this.pollingFrequency = pollingFrequency;
+        }
     }
 
     public int getGracePeriod() {
