@@ -184,11 +184,13 @@ public class ServiceConfigurationManager {
 
 
     /**
-     *
+     * @param currentTimeStamp Current time
      * @return next service checker running time
      */
-    public long getNextRunningTime(){
-        if(0==getGracePeriod() || (getPollingFrequency()<=getGracePeriod())||(getPollingFrequency()>getGracePeriod() && (getLastRuningtimeWithGracePeriod() >= getLastRuningtimeWithPollingFrequency()))){
+    public long getNextRunningTime(long currentTimeStamp){
+        if(isServiceInOutage(currentTimeStamp)){
+            return getServiceOutageEndTime();
+        }else if(0==getGracePeriod() || (getPollingFrequency()<=getGracePeriod())||(getPollingFrequency()>getGracePeriod() && (getLastRuningtimeWithGracePeriod() >= getLastRuningtimeWithPollingFrequency()))){
             return getLastRuningtimeWithPollingFrequency()+getPollingFrequency()* ApplicationConstant.CONSTANT_MILI_SEC_TO_SEC_MULTIFICATION_FACTOR;
         }else{
             return getLastRuningtimeWithPollingFrequency()+getGracePeriod()* ApplicationConstant.CONSTANT_MILI_SEC_TO_SEC_MULTIFICATION_FACTOR;
@@ -198,9 +200,13 @@ public class ServiceConfigurationManager {
 
     /**
      * This method is for updating the last runtime according to the next runtime generation logic.
+     * @param currentTimeStamp current time
      */
-    public void updateLastRuningtime(){
-        if(0==getGracePeriod()|| (getPollingFrequency()<=getGracePeriod())||(getPollingFrequency()>getGracePeriod() && (getLastRuningtimeWithGracePeriod() >= getLastRuningtimeWithPollingFrequency()))){
+    public void updateLastRunningtime(long currentTimeStamp){
+        if(isServiceInOutage(currentTimeStamp)){
+            setLastRuningtimeWithPollingFrequency(getServiceOutageEndTime());
+            setLastRuningTime(getLastRuningtimeWithPollingFrequency());
+        }else if(0==getGracePeriod()|| (getPollingFrequency()<=getGracePeriod())||(getPollingFrequency()>getGracePeriod() && (getLastRuningtimeWithGracePeriod() >= getLastRuningtimeWithPollingFrequency()))){
             setLastRuningtimeWithPollingFrequency(getLastRuningtimeWithPollingFrequency() + getPollingFrequency() * ApplicationConstant.CONSTANT_MILI_SEC_TO_SEC_MULTIFICATION_FACTOR);
             setLastRuningTime(getLastRuningtimeWithPollingFrequency());
         }else{
@@ -267,6 +273,8 @@ public class ServiceConfigurationManager {
                 ", lastRuningTime=" + lastRuningTime +
                 ", lastRuningtimeWithPollingFrequency=" + lastRuningtimeWithPollingFrequency +
                 ", lastRuningtimeWithGracePeriod=" + lastRuningtimeWithGracePeriod +
+                ", serviceOutageStartTime=" + serviceOutageStartTime +
+                ", serviceOutageEndTime=" + serviceOutageEndTime +
                 '}';
     }
 }

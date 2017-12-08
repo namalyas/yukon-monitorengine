@@ -39,25 +39,25 @@ public class ServiceMonitorServer extends Thread {
      * @param serviceConfigurationManager Individual service configuration detials contains object
      * @return true or false depending on the service check running eligability
      */
-    private boolean isServiceEligibleForCheck(ServiceConfigurationManager serviceConfigurationManager){
+    private boolean isServiceEligibleForCheck(ServiceConfigurationManager serviceConfigurationManager,long currentTimeStamp){
         return ((serviceConfigurationManager.getLastRuningTime()==0)||
-                (serviceConfigurationManager.getNextRunningTime()<=lastRunningTime));
+                (serviceConfigurationManager.getNextRunningTime(currentTimeStamp)<=lastRunningTime));
     }
 
     @Override
     public void run() {
 
         while (isServerRun){
-            long currentTime=System.currentTimeMillis();
             try {
                 Thread.sleep(ApplicationConstant.CONSTANT_MILI_SEC_TO_SEC_MULTIFICATION_FACTOR);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
+            long currentTime=System.currentTimeMillis();
             for(ServiceConfigurationManager serviceConfigurationManager: getServiceConfigurationManagerMap().values()){
-                if (isServiceEligibleForCheck(serviceConfigurationManager)) {
-                    serviceConfigurationManager.updateLastRuningtime();
+                if (isServiceEligibleForCheck(serviceConfigurationManager,currentTime)) {
+                    serviceConfigurationManager.updateLastRunningtime(currentTime);
                     executorThreadPool.submit(new ServiceMonitorAgent(serviceConfigurationManager));
                 }
 
