@@ -21,48 +21,47 @@ NOTE: Please check the availability of ServerSocket ports used in ServiceMonitor
 
 # Project Description
 Server capabilities are demonstrate in ServiceMonitorServerTest class. please refer the Planned tests currently executed.
-<li>1) Run with  working server connection which will die in 5 sec</li>
-<li>2) Run with  not working server connection wait 5 sec and then run 5 sec and then run</li>
-<li>3) Attach multiple listeners for same connection </li>
-<li>4) Multiple server connections with single listeners</li>
+1) Run with  working server connection which will die in 5 sec
+2) Run with  not working server connection wait 5 sec and then run 5 sec and then run
+3) Attach multiple listeners for same connection
+4) Multiple server connections with single listeners
           
 If you want you can test with multiple unit tests other than this you can write your own. (To easy refering purposes Logs ralted only this testcase are set to display in the console. other logs store in log files . refer- log4j.properties)
            
 Apart from thaServiceConfigurationManagerTest class contains TDD approach unit tetst wich are used to build some complex methods ralted to calculate server next running time and serverice outage time. boundary conditions are as follows.    
-Boundary conditions for getNextRunningTime(currentTimeStamp) method not considering the service outage time
-           
-<li>1)gracePeriod ==0 then return lastRuningtimeWithPollingFrequency+pollingFrequency</li>
-<li>2)pollingFrequency==gracePeriod then return lastRuningtimeWithPollingFrequency+pollingFrequency</li>
-<li>3)pollingFrequency<gracePeriod then return lastRuningtimeWithPollingFrequency+pollingFrequency</li>
-<li>4)pollingFrequency>gracePeriod && lastRuningtimeWithGracePeriod==lastRuningtimeWithPollingFrequency then return lastRuningtimeWithPollingFrequency+pollingFrequency</li>
-<li>5)pollingFrequency>gracePeriod && lastRuningtimeWithGracePeriod>lastRuningtimeWithPollingFrequency then return lastRuningtimeWithPollingFrequency+pollingFrequency</li>
-<li>6)pollingFrequency>gracePeriod && lastRuningtimeWithGracePeriod<lastRuningtimeWithPollingFrequency then return lastRuningtimeWithPollingFrequency+gracePeriod</li>
+Boundary conditions for getNextRunningTime(currentTimeStamp) method not considering the service outage time          
+1)gracePeriod ==0 then return lastRuningtimeWithPollingFrequency+pollingFrequency
+2)pollingFrequency==gracePeriod then return lastRuningtimeWithPollingFrequency+pollingFrequency
+3)pollingFrequency<gracePeriod then return lastRuningtimeWithPollingFrequency+pollingFrequency
+4)pollingFrequency>gracePeriod && lastRuningtimeWithGracePeriod==lastRuningtimeWithPollingFrequency then return lastRuningtimeWithPollingFrequency+pollingFrequency
+5)pollingFrequency>gracePeriod && lastRuningtimeWithGracePeriod>lastRuningtimeWithPollingFrequency then return lastRuningtimeWithPollingFrequency+pollingFrequency
+6)pollingFrequency>gracePeriod && lastRuningtimeWithGracePeriod<lastRuningtimeWithPollingFrequency then return lastRuningtimeWithPollingFrequency+gracePeriod
            
 Boundary conditions for getNextRunningTime(currentTimeStamp) method considering the service outage time          
-<li>7) serviceOutageStartTime > 0 and  serviceOutageEndTime > 0 and serviceOutageStartTime < serviceOutageEndTime and serviceOutageStartTime < currentTimestamp < serviceOutageEndTime  then return serviceOutageEndTime</li>
+7) serviceOutageStartTime > 0 and  serviceOutageEndTime > 0 and serviceOutageStartTime < serviceOutageEndTime and serviceOutageStartTime < currentTimestamp < serviceOutageEndTime  then return serviceOutageEndTime
            
 Exceptional cases
-<li>1) pollingFrequency==0 this covers when ServiceConfigurationManager object creation</li>         
+1) pollingFrequency==0 this covers when ServiceConfigurationManager object creation        
            
 --------------------------------------------------------------------------------------------------------------
 Boundary conditions for isServiceInOutage(currentTimestamp) method
-<li>1) serviceOutageStartTime > 0 and  serviceOutageEndTime > 0 and serviceOutageStartTime < serviceOutageEndTime and currentTimestamp < serviceOutageStartTime then return false</li> 
-<li>2) serviceOutageStartTime > 0 and  serviceOutageEndTime > 0 and serviceOutageStartTime < serviceOutageEndTime and currentTimestamp > serviceOutageEndTime then return false</li> 
-<li>3) serviceOutageStartTime > 0 and  serviceOutageEndTime > 0 and serviceOutageStartTime < serviceOutageEndTime and serviceOutageStartTime < currentTimestamp < serviceOutageEndTime  then return true</li>      
+1) serviceOutageStartTime > 0 and  serviceOutageEndTime > 0 and serviceOutageStartTime < serviceOutageEndTime and currentTimestamp < serviceOutageStartTime then return false</li> 
+2) serviceOutageStartTime > 0 and  serviceOutageEndTime > 0 and serviceOutageStartTime < serviceOutageEndTime and currentTimestamp > serviceOutageEndTime then return false</li> 
+3) serviceOutageStartTime > 0 and  serviceOutageEndTime > 0 and serviceOutageStartTime < serviceOutageEndTime and serviceOutageStartTime < currentTimestamp < serviceOutageEndTime  then return true</li>      
            
 Exceptional cases - those cases are already covers in set methods</li>
-<li>1) serviceOutageStartTime <= 0 then exception throws UnsupportedServiceConfigurationManagerParameterException</li> 
-<li>2) serviceOutageEndTime <= 0 then exception throws UnsupportedServiceConfigurationManagerParameterException</li> 
-<li>3) serviceOutageStartTime > 0 and  serviceOutageEndTime > 0 and serviceOutageStartTime > serviceOutageEndTime then exception throws UnsupportedServiceConfigurationManagerParameterException</li> 
+1) serviceOutageStartTime <= 0 then exception throws UnsupportedServiceConfigurationManagerParameterException
+2) serviceOutageEndTime <= 0 then exception throws UnsupportedServiceConfigurationManagerParameterException
+3) serviceOutageStartTime > 0 and  serviceOutageEndTime > 0 and serviceOutageStartTime > serviceOutageEndTime then exception throws UnsupportedServiceConfigurationManagerParameterException
            
 
 # What Was Done - Extra
-<li>1)ServiceBehaviourAdaptor</li>
-<li>2)TDD approach to build complex logics in simplify way</li>
-<li>3)Exception hirachi for finer exceptions</li>
-<li>4)Eleminate duplicate service addtion by introducing service UUID</li>
-<li>5)Adding extra description field for service description</li>
-<li>6)Adding extra prototype field for service communication prototype</li>
+1)ServiceBehaviourAdaptor
+2)TDD approach to build complex logics in simplify way
+3)Exception hirachi for finer exceptions
+4)Eleminate duplicate service addtion by introducing service UUID
+5)Adding extra description field for service description
+6)Adding extra prototype field for service communication prototype
 
 
 # Future Enhancements
