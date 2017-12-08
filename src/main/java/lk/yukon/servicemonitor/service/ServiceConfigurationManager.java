@@ -39,18 +39,18 @@ public class ServiceConfigurationManager {
      * @param gracePeriod waiting time to check once again if service is down
      */
     public ServiceConfigurationManager(Service service, int pollingFrequency, int gracePeriod) throws UnsupportedServiceConfigurationManagerParameterException {
-        if(null==service||0==pollingFrequency){
+        if(null==service||ApplicationConstant.CONSTANT_DEFAULT_ZERO==pollingFrequency){
             throw new UnsupportedServiceConfigurationManagerParameterException("service :"+service+", pollingFrequency :"+pollingFrequency);
         }else{
             this.service = service;
             this.pollingFrequency = pollingFrequency;
             this.gracePeriod = gracePeriod;
             this.serviceBehaviourListenerList=new ArrayList<ServiceBehaviourListener>();
-            this.lastRuningTime=0;
-            this.lastRuningtimeWithPollingFrequency=0;
-            this.lastRuningtimeWithGracePeriod=0;
-            this.serviceOutageStartTime=0;
-            this.serviceOutageEndTime=0;
+            this.lastRuningTime=ApplicationConstant.CONSTANT_DEFAULT_ZERO;
+            this.lastRuningtimeWithPollingFrequency=ApplicationConstant.CONSTANT_DEFAULT_ZERO;
+            this.lastRuningtimeWithGracePeriod=ApplicationConstant.CONSTANT_DEFAULT_ZERO;
+            this.serviceOutageStartTime=ApplicationConstant.CONSTANT_DEFAULT_ZERO;
+            this.serviceOutageEndTime=ApplicationConstant.CONSTANT_DEFAULT_ZERO;
         }
 
 
@@ -64,18 +64,18 @@ public class ServiceConfigurationManager {
      * @param serviceBehaviourListenerList list holding the servicebehaviourlisteners
      */
     public ServiceConfigurationManager(Service service, int pollingFrequency, int gracePeriod, List<ServiceBehaviourListener> serviceBehaviourListenerList) throws UnsupportedServiceConfigurationManagerParameterException{
-        if(null==service||0==pollingFrequency){
+        if(null==service||ApplicationConstant.CONSTANT_DEFAULT_ZERO==pollingFrequency){
             throw new UnsupportedServiceConfigurationManagerParameterException("service :"+service+", pollingFrequency :"+pollingFrequency);
         }else {
             this.service = service;
             this.pollingFrequency = pollingFrequency;
             this.gracePeriod = gracePeriod;
             this.serviceBehaviourListenerList = serviceBehaviourListenerList;
-            this.lastRuningTime = 0;
-            this.lastRuningtimeWithPollingFrequency = 0;
-            this.lastRuningtimeWithGracePeriod = 0;
-            this.serviceOutageStartTime=0;
-            this.serviceOutageEndTime=0;
+            this.lastRuningTime = ApplicationConstant.CONSTANT_DEFAULT_ZERO;
+            this.lastRuningtimeWithPollingFrequency = ApplicationConstant.CONSTANT_DEFAULT_ZERO;
+            this.lastRuningtimeWithGracePeriod = ApplicationConstant.CONSTANT_DEFAULT_ZERO;
+            this.serviceOutageStartTime=ApplicationConstant.CONSTANT_DEFAULT_ZERO;
+            this.serviceOutageEndTime=ApplicationConstant.CONSTANT_DEFAULT_ZERO;
         }
     }
 
@@ -97,7 +97,7 @@ public class ServiceConfigurationManager {
     }
 
     public void setPollingFrequency(int pollingFrequency) throws UnsupportedServiceConfigurationManagerParameterException{
-        if(0==pollingFrequency){
+        if(ApplicationConstant.CONSTANT_DEFAULT_ZERO==pollingFrequency){
             throw new UnsupportedServiceConfigurationManagerParameterException("pollingFrequency :"+pollingFrequency);
         }else {
             this.pollingFrequency = pollingFrequency;
@@ -150,7 +150,7 @@ public class ServiceConfigurationManager {
     }
 
     public void setServiceOutageStartTime(long serviceOutageStartTime) throws UnsupportedServiceConfigurationManagerParameterException {
-        if(0>=serviceOutageStartTime){
+        if(ApplicationConstant.CONSTANT_DEFAULT_ZERO>=serviceOutageStartTime){
             throw new UnsupportedServiceConfigurationManagerParameterException("serviceOutageStartTime :"+serviceOutageStartTime);
         }else{
             this.serviceOutageStartTime = serviceOutageStartTime;
@@ -163,7 +163,7 @@ public class ServiceConfigurationManager {
     }
 
     public void setServiceOutageEndTime(long serviceOutageEndTime) throws UnsupportedServiceConfigurationManagerParameterException{
-        if(0>=serviceOutageEndTime || getServiceOutageStartTime()>= serviceOutageEndTime){
+        if(ApplicationConstant.CONSTANT_DEFAULT_ZERO>=serviceOutageEndTime || getServiceOutageStartTime()>= serviceOutageEndTime){
             throw new UnsupportedServiceConfigurationManagerParameterException("serviceOutageStartTime :"+getServiceOutageStartTime() +"serviceOutageEndTime :"+serviceOutageEndTime);
         }else {
             this.serviceOutageEndTime = serviceOutageEndTime;
@@ -176,7 +176,7 @@ public class ServiceConfigurationManager {
      * @return true if serviceOutageStartTime < currentTimestamp < serviceOutageEndTime
      */
     public boolean isServiceInOutage(long currentTimestamp) {
-        if(getServiceOutageStartTime() > 0 && getServiceOutageEndTime() > 0) {
+        if(getServiceOutageStartTime() > ApplicationConstant.CONSTANT_DEFAULT_ZERO && getServiceOutageEndTime() > ApplicationConstant.CONSTANT_DEFAULT_ZERO) {
             return currentTimestamp >= getServiceOutageStartTime() && currentTimestamp <= getServiceOutageEndTime();
         }
         return false;
@@ -190,7 +190,7 @@ public class ServiceConfigurationManager {
     public long getNextRunningTime(long currentTimeStamp){
         if(isServiceInOutage(currentTimeStamp)){
             return getServiceOutageEndTime();
-        }else if(0==getGracePeriod() || (getPollingFrequency()<=getGracePeriod())||(getPollingFrequency()>getGracePeriod() && (getLastRuningtimeWithGracePeriod() >= getLastRuningtimeWithPollingFrequency()))){
+        }else if(ApplicationConstant.CONSTANT_DEFAULT_ZERO==getGracePeriod() || (getPollingFrequency()<=getGracePeriod())||(getPollingFrequency()>getGracePeriod() && (getLastRuningtimeWithGracePeriod() >= getLastRuningtimeWithPollingFrequency()))){
             return getLastRuningtimeWithPollingFrequency()+getPollingFrequency()* ApplicationConstant.CONSTANT_MILI_SEC_TO_SEC_MULTIFICATION_FACTOR;
         }else{
             return getLastRuningtimeWithPollingFrequency()+getGracePeriod()* ApplicationConstant.CONSTANT_MILI_SEC_TO_SEC_MULTIFICATION_FACTOR;
@@ -206,7 +206,7 @@ public class ServiceConfigurationManager {
         if(isServiceInOutage(currentTimeStamp)){
             setLastRuningtimeWithPollingFrequency(getServiceOutageEndTime());
             setLastRuningTime(getLastRuningtimeWithPollingFrequency());
-        }else if(0==getGracePeriod()|| (getPollingFrequency()<=getGracePeriod())||(getPollingFrequency()>getGracePeriod() && (getLastRuningtimeWithGracePeriod() >= getLastRuningtimeWithPollingFrequency()))){
+        }else if(ApplicationConstant.CONSTANT_DEFAULT_ZERO==getGracePeriod()|| (getPollingFrequency()<=getGracePeriod())||(getPollingFrequency()>getGracePeriod() && (getLastRuningtimeWithGracePeriod() >= getLastRuningtimeWithPollingFrequency()))){
             setLastRuningtimeWithPollingFrequency(getLastRuningtimeWithPollingFrequency() + getPollingFrequency() * ApplicationConstant.CONSTANT_MILI_SEC_TO_SEC_MULTIFICATION_FACTOR);
             setLastRuningTime(getLastRuningtimeWithPollingFrequency());
         }else{
@@ -251,7 +251,7 @@ public class ServiceConfigurationManager {
      */
     public void markServiceNotRunning(){
         ServiceRunningStatus servicePreviousRunningStatus=service.getServiceRunningStatus();
-        if(0==getGracePeriod()||(getLastRuningtimeWithGracePeriod() >= getLastRuningtimeWithPollingFrequency())) {
+        if(ApplicationConstant.CONSTANT_DEFAULT_ZERO==getGracePeriod()||(getLastRuningtimeWithGracePeriod() >= getLastRuningtimeWithPollingFrequency())) {
             service.setServiceRunningStatus(ServiceRunningStatus.SERVICE_RUNNING_STATUS_NOT_RUNNING);
             if (!servicePreviousRunningStatus.equals(ServiceRunningStatus.SERVICE_RUNNING_STATUS_NOT_RUNNING)) {
                 for (ServiceBehaviourListener serviceBehaviourListener : serviceBehaviourListenerList) {

@@ -25,9 +25,7 @@ This repo contains service monitor server
 <ul>check access modifiers of each and every service</ul>
 <ul>remove unwanted imports</ul>
 <ul>check java versions</ul>
-<ul>replace 0 with constant</ul>
 <ul>unit tests </ul>
 <ul>yourkit </ul>
 <ul>readme </ul>
 <ul>server-singleton </ul>
-<ul>service extra parameter for desctiption default host:port </ul>

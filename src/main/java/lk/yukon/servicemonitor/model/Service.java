@@ -29,7 +29,7 @@ public class Service {
      * @param port port of the service
      */
     public Service(String host, int port) throws UnsupportedServiceParameterException {
-        if(null==serviceUID || null==host || 0==port){
+        if(null==serviceUID || null==host || ApplicationConstant.CONSTANT_DEFAULT_ZERO==port){
             throw new UnsupportedServiceParameterException("serviceUID :"+serviceUID+", host :"+host+", port:"+port);
         }else{
             setServiceUID(host+ ApplicationConstant.CONSTANT_UNDERSCORE+port);
@@ -49,7 +49,7 @@ public class Service {
      * @param description description of the service
      */
     public Service(String host, int port,String description) throws UnsupportedServiceParameterException {
-        if(null==serviceUID || null==host || 0==port){
+        if(null==serviceUID || null==host || ApplicationConstant.CONSTANT_DEFAULT_ZERO==port){
             throw new UnsupportedServiceParameterException("serviceUID :"+serviceUID+", host :"+host+", port:"+port);
         }else{
             setServiceUID(host+ ApplicationConstant.CONSTANT_UNDERSCORE+port);
@@ -70,7 +70,7 @@ public class Service {
      * @param serviceRunningStatus service running status
      */
     public Service(String host, int port, ServiceRunningStatus serviceRunningStatus)  throws UnsupportedServiceParameterException {
-        if(null==serviceUID || null==host || 0==port){
+        if(null==serviceUID || null==host || ApplicationConstant.CONSTANT_DEFAULT_ZERO==port){
             throw new UnsupportedServiceParameterException("serviceUID :"+serviceUID+", host :"+host+", port:"+port);
         }else {
             setServiceUID(host+ ApplicationConstant.CONSTANT_UNDERSCORE+port);
@@ -89,7 +89,7 @@ public class Service {
      * @param serviceProtocolType service communicating protocol
      */
     public Service(String host, int port, ServiceRunningStatus serviceRunningStatus, ServiceProtocolType serviceProtocolType)  throws UnsupportedServiceParameterException {
-        if(null==serviceUID || null==host || 0==port){
+        if(null==serviceUID || null==host || ApplicationConstant.CONSTANT_DEFAULT_ZERO==port){
             throw new UnsupportedServiceParameterException("serviceUID :"+serviceUID+", host :"+host+", port:"+port);
         }else {
             setServiceUID(host+ ApplicationConstant.CONSTANT_UNDERSCORE+port);
@@ -132,7 +132,7 @@ public class Service {
     }
 
     public void setPort(int port)throws UnsupportedServiceParameterException {
-        if(0==port){
+        if(ApplicationConstant.CONSTANT_DEFAULT_ZERO==port){
             throw new UnsupportedServiceParameterException("port :"+port);
         }else {
             this.port = port;

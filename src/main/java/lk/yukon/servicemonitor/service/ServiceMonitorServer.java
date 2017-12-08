@@ -40,7 +40,7 @@ public class ServiceMonitorServer extends Thread {
      * @return true or false depending on the service check running eligability
      */
     private boolean isServiceEligibleForCheck(ServiceConfigurationManager serviceConfigurationManager,long currentTimeStamp){
-        return ((serviceConfigurationManager.getLastRuningTime()==0)||
+        return ((ApplicationConstant.CONSTANT_DEFAULT_ZERO==serviceConfigurationManager.getLastRuningTime())||
                 (serviceConfigurationManager.getNextRunningTime(currentTimeStamp)<=lastRunningTime));
     }
 
