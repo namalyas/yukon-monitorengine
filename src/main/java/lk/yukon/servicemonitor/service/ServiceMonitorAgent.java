@@ -39,11 +39,11 @@ public class ServiceMonitorAgent implements Runnable{
             socket.close();
 
         }catch (IOException ex){
-            LOGGER.error(String.format("IOException occured : %s",ex.getMessage()));
+            LOGGER.error("IOException occured : ",ex);
             serviceConfigurationManager.markServiceNotRunning();
 
         }catch (Exception ex){
-            LOGGER.error(String.format("Exception occured : %s",ex.getMessage()));
+            LOGGER.error("Exception occured : ",ex);
             serviceConfigurationManager.markServiceNotRunning();
 
         }
