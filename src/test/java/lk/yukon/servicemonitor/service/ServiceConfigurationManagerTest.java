@@ -3,6 +3,8 @@ package lk.yukon.servicemonitor.service;
 import junit.framework.TestCase;
 import lk.yukon.servicemonitor.model.Service;
 
+import java.util.Date;
+
 /**
  * license: BSD - see LICENSE for details
  *
@@ -15,7 +17,7 @@ import lk.yukon.servicemonitor.model.Service;
 public class ServiceConfigurationManagerTest extends TestCase {
 
     /**
-     *In here I'm covering below boundary conditions for getNextRunningTime() method
+     * boundary conditions for getNextRunningTime() method
      *
      * 1)gracePeriod ==0 then return lastRuningtimeWithPollingFrequency+pollingFrequency
      * 2)pollingFrequency==gracePeriod then return lastRuningtimeWithPollingFrequency+pollingFrequency
@@ -26,6 +28,9 @@ public class ServiceConfigurationManagerTest extends TestCase {
      *
      * exceptional cases
      * 1) pollingFrequency==0 this covers when ServiceConfigurationManager object creation
+     *
+     *
+     *
      *
      */
 
@@ -114,9 +119,64 @@ public class ServiceConfigurationManagerTest extends TestCase {
     }
 
 
+    /**
+     *
+     * boundary conditions for isServiceInOutage(currentTimestamp) method
+     *
+     * 1) serviceOutageStartTime > 0 and  serviceOutageEndTime > 0 and serviceOutageStartTime < serviceOutageEndTime and currentTimestamp < serviceOutageStartTime then return false
+     * 2) serviceOutageStartTime > 0 and  serviceOutageEndTime > 0 and serviceOutageStartTime < serviceOutageEndTime and currentTimestamp > serviceOutageEndTime then return false
+     * 3) serviceOutageStartTime > 0 and  serviceOutageEndTime > 0 and serviceOutageStartTime < serviceOutageEndTime and serviceOutageStartTime < currentTimestamp < serviceOutageEndTime  then return true
+     *
+     *
+     * exceptional cases - those cases are allready covers in set methods
+     *
+     * 1) serviceOutageStartTime <= 0 then exception throws UnsupportedServiceConfigurationManagerParameterException
+     * 2) serviceOutageEndTime <= 0 then exception throws UnsupportedServiceConfigurationManagerParameterException
+     * 3) serviceOutageStartTime > 0 and  serviceOutageEndTime > 0 and serviceOutageStartTime > serviceOutageEndTime then exception throws UnsupportedServiceConfigurationManagerParameterException
+     *
+     *
+     * /
+
+
+    /**
+     * case1 : serviceOutageStartTime > 0 and  serviceOutageEndTime > 0 and serviceOutageStartTime < serviceOutageEndTime and currentTimestamp < serviceOutageStartTime then return false
+     * @throws Exception if AssertionError occurs
+     */
+    public void testIsServiceInOutageWithCase1() throws Exception {
+        long cuttrntTimeStamp=System.currentTimeMillis();
+        serviceConfigurationManager=new ServiceConfigurationManager(new Service("Google","www.google.com",80),6,3);
+        serviceConfigurationManager.setServiceOutageStartTime(cuttrntTimeStamp-1000);
+        serviceConfigurationManager.setServiceOutageEndTime(cuttrntTimeStamp+1000);
+        assertEquals(false,serviceConfigurationManager.isServiceInOutage(cuttrntTimeStamp-2000));
+    }
 
 
 
+    /**
+     * case2 : serviceOutageStartTime > 0 and  serviceOutageEndTime > 0 and serviceOutageStartTime < serviceOutageEndTime and currentTimestamp > serviceOutageEndTime then return false
+     * @throws Exception if AssertionError occurs
+     */
+    public void testIsServiceInOutageWithCase2() throws Exception {
+        long cuttrntTimeStamp=System.currentTimeMillis();
+        serviceConfigurationManager=new ServiceConfigurationManager(new Service("Google","www.google.com",80),6,3);
+        serviceConfigurationManager.setServiceOutageStartTime(cuttrntTimeStamp-1000);
+        serviceConfigurationManager.setServiceOutageEndTime(cuttrntTimeStamp+1000);
+        assertEquals(false,serviceConfigurationManager.isServiceInOutage(cuttrntTimeStamp+2000));
+    }
+
+
+
+    /**
+     * case3 : serviceOutageStartTime > 0 and  serviceOutageEndTime > 0 and serviceOutageStartTime < serviceOutageEndTime and serviceOutageStartTime < currentTimestamp < serviceOutageEndTime  then return true
+     * @throws Exception if AssertionError occurs
+     */
+    public void testIsServiceInOutageWithCase3() throws Exception {
+        long cuttrntTimeStamp=System.currentTimeMillis();
+        serviceConfigurationManager=new ServiceConfigurationManager(new Service("Google","www.google.com",80),6,3);
+        serviceConfigurationManager.setServiceOutageStartTime(cuttrntTimeStamp-1000);
+        serviceConfigurationManager.setServiceOutageEndTime(cuttrntTimeStamp+1000);
+        assertEquals(true,serviceConfigurationManager.isServiceInOutage(cuttrntTimeStamp));
+    }
 
 
 }

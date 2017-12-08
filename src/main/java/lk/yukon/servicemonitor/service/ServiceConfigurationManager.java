@@ -28,6 +28,9 @@ public class ServiceConfigurationManager {
     private long lastRuningtimeWithPollingFrequency;
     private long lastRuningtimeWithGracePeriod;
 
+    private long serviceOutageStartTime;
+    private long serviceOutageEndTime;
+
 
     /**
      *
@@ -46,6 +49,8 @@ public class ServiceConfigurationManager {
             this.lastRuningTime=0;
             this.lastRuningtimeWithPollingFrequency=0;
             this.lastRuningtimeWithGracePeriod=0;
+            this.serviceOutageStartTime=0;
+            this.serviceOutageEndTime=0;
         }
 
 
@@ -69,6 +74,8 @@ public class ServiceConfigurationManager {
             this.lastRuningTime = 0;
             this.lastRuningtimeWithPollingFrequency = 0;
             this.lastRuningtimeWithGracePeriod = 0;
+            this.serviceOutageStartTime=0;
+            this.serviceOutageEndTime=0;
         }
     }
 
@@ -138,6 +145,42 @@ public class ServiceConfigurationManager {
     }
 
 
+    public long getServiceOutageStartTime() {
+        return serviceOutageStartTime;
+    }
+
+    public void setServiceOutageStartTime(long serviceOutageStartTime) throws UnsupportedServiceConfigurationManagerParameterException {
+        if(0>=serviceOutageStartTime){
+            throw new UnsupportedServiceConfigurationManagerParameterException("serviceOutageStartTime :"+serviceOutageStartTime);
+        }else{
+            this.serviceOutageStartTime = serviceOutageStartTime;
+        }
+
+    }
+
+    public long getServiceOutageEndTime() {
+        return serviceOutageEndTime;
+    }
+
+    public void setServiceOutageEndTime(long serviceOutageEndTime) throws UnsupportedServiceConfigurationManagerParameterException{
+        if(0>=serviceOutageEndTime || getServiceOutageStartTime()>= serviceOutageEndTime){
+            throw new UnsupportedServiceConfigurationManagerParameterException("serviceOutageStartTime :"+getServiceOutageStartTime() +"serviceOutageEndTime :"+serviceOutageEndTime);
+        }else {
+            this.serviceOutageEndTime = serviceOutageEndTime;
+        }
+    }
+
+    /**
+     *
+     * @param currentTimestamp current time stamp
+     * @return true if serviceOutageStartTime < currentTimestamp < serviceOutageEndTime
+     */
+    public boolean isServiceInOutage(long currentTimestamp) {
+        if(getServiceOutageStartTime() > 0 && getServiceOutageEndTime() > 0) {
+            return currentTimestamp >= getServiceOutageStartTime() && currentTimestamp <= getServiceOutageEndTime();
+        }
+        return false;
+    }
 
 
     /**
@@ -145,7 +188,7 @@ public class ServiceConfigurationManager {
      * @return next service checker running time
      */
     public long getNextRunningTime(){
-        if(getGracePeriod()==0 || (getPollingFrequency()<=getGracePeriod())||(getPollingFrequency()>getGracePeriod() && (getLastRuningtimeWithGracePeriod() >= getLastRuningtimeWithPollingFrequency()))){
+        if(0==getGracePeriod() || (getPollingFrequency()<=getGracePeriod())||(getPollingFrequency()>getGracePeriod() && (getLastRuningtimeWithGracePeriod() >= getLastRuningtimeWithPollingFrequency()))){
             return getLastRuningtimeWithPollingFrequency()+getPollingFrequency()* ApplicationConstant.CONSTANT_MILI_SEC_TO_SEC_MULTIFICATION_FACTOR;
         }else{
             return getLastRuningtimeWithPollingFrequency()+getGracePeriod()* ApplicationConstant.CONSTANT_MILI_SEC_TO_SEC_MULTIFICATION_FACTOR;

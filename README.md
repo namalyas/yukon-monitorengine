@@ -14,11 +14,10 @@ This repo contains service monitor server
 <ul>ServiceBehaviourAdaptor</ul>
 <ul>TDD approach to build complex logics in simplify way</ul>
 <ul>Exception hirachi for finer exceptions</ul>
+<ul>eleminate duplicate service addtion by introducing service UUID</ul>
 
 # task to do
 
-<ul>add exception for incorrect Service - ex: port missing/ polling time missing - done</ul>
-<ul>service name unique check uuid- done</ul>
 <ul>add units in comments</ul>
 <ul>add LOGGERS</ul>
 <ul>add syncronizations related stuff specially serviceconfigurationmanager</ul>
@@ -27,4 +26,9 @@ This repo contains service monitor server
 <ul>check java versions</ul>
 <ul>replace 0 with constant</ul>
 <ul>outage time feature</ul>
-<ul>mark port 0 is not supported  - done </ul>
+<ul>unit tests </ul>
+<ul>yourkit </ul>
+<ul>readme </ul>
+<ul>server-singleton </ul>
+<ul>service uuid generations host_port- automatically </ul>
+<ul>service extra parameter for desctiption default host:port </ul>
