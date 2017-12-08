@@ -10,7 +10,13 @@ import java.io.IOException;
 import java.net.ServerSocket;
 
 /**
- * Created by namal on 12/8/17.
+ * license: BSD - see LICENSE for details
+ *
+ * ServiceMonitorServerTest is used for unit test and demostrate ServiceMonitorServer class features
+ * Please follow below planned tests
+ *
+ * @author Namal Weheragoda
+ * @version 1.0.0
  */
 public class ServiceMonitorServerTest extends TestCase {
     private static final Logger LOGGER= Logger.getLogger(ServiceMonitorServerTest.class);
