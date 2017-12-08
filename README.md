@@ -21,10 +21,9 @@ This repo contains service monitor server
 
 <ul>add units in comments</ul>
 <ul>add LOGGERS</ul>
-<ul>add syncronizations related stuff specially serviceconfigurationmanager</ul>
-<ul>check access modifiers of each and every service</ul>
 <ul>check java versions</ul>
 <ul>unit tests </ul>
 <ul>yourkit </ul>
 <ul>readme </ul>
 <ul>server-singleton </ul>
+<ul>String.format for string append </ul>

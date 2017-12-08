@@ -175,7 +175,7 @@ public class ServiceConfigurationManager {
      * @param currentTimestamp current time stamp
      * @return true if serviceOutageStartTime < currentTimestamp < serviceOutageEndTime
      */
-    public boolean isServiceInOutage(long currentTimestamp) {
+    public synchronized boolean isServiceInOutage(long currentTimestamp) {
         if(getServiceOutageStartTime() > ApplicationConstant.CONSTANT_DEFAULT_ZERO && getServiceOutageEndTime() > ApplicationConstant.CONSTANT_DEFAULT_ZERO) {
             return currentTimestamp >= getServiceOutageStartTime() && currentTimestamp <= getServiceOutageEndTime();
         }
@@ -187,7 +187,7 @@ public class ServiceConfigurationManager {
      * @param currentTimeStamp Current time
      * @return next service checker running time
      */
-    public long getNextRunningTime(long currentTimeStamp){
+    public synchronized long getNextRunningTime(long currentTimeStamp){
         if(isServiceInOutage(currentTimeStamp)){
             return getServiceOutageEndTime();
         }else if(ApplicationConstant.CONSTANT_DEFAULT_ZERO==getGracePeriod() || (getPollingFrequency()<=getGracePeriod())||(getPollingFrequency()>getGracePeriod() && (getLastRuningtimeWithGracePeriod() >= getLastRuningtimeWithPollingFrequency()))){
@@ -202,7 +202,7 @@ public class ServiceConfigurationManager {
      * This method is for updating the last runtime according to the next runtime generation logic.
      * @param currentTimeStamp current time
      */
-    public void updateLastRunningtime(long currentTimeStamp){
+    public synchronized void updateLastRunningtime(long currentTimeStamp){
         if(isServiceInOutage(currentTimeStamp)){
             setLastRuningtimeWithPollingFrequency(getServiceOutageEndTime());
             setLastRuningTime(getLastRuningtimeWithPollingFrequency());
@@ -220,7 +220,7 @@ public class ServiceConfigurationManager {
      *
      * @param serviceBehaviourListener Implementaion of serviceBehaviourListener object to add serviceBehaviourListenerList
      */
-    public void addServiceBehaviourListener(ServiceBehaviourListener serviceBehaviourListener){
+    public synchronized void addServiceBehaviourListener(ServiceBehaviourListener serviceBehaviourListener){
         serviceBehaviourListenerList.add(serviceBehaviourListener);
     }
 
@@ -228,7 +228,7 @@ public class ServiceConfigurationManager {
      *
      * @param serviceBehaviourListener serviceBehaviourListener object for removing from serviceBehaviourListenerList
      */
-    public void removeServiceBehaviourListener(ServiceBehaviourListener serviceBehaviourListener){
+    public synchronized void removeServiceBehaviourListener(ServiceBehaviourListener serviceBehaviourListener){
         serviceBehaviourListenerList.remove(serviceBehaviourListener);
     }
 
@@ -236,7 +236,7 @@ public class ServiceConfigurationManager {
     /**
      * This method is for watching service status change (service running) and notify to listeners
      */
-    protected void markServiceRunning(){
+    protected synchronized void markServiceRunning(){
         ServiceRunningStatus servicePreviousRunningStatus=service.getServiceRunningStatus();
         if(!servicePreviousRunningStatus.equals(ServiceRunningStatus.SERVICE_RUNNING_STATUS_RUNNING)){
             service.setServiceRunningStatus(ServiceRunningStatus.SERVICE_RUNNING_STATUS_RUNNING);
@@ -249,7 +249,7 @@ public class ServiceConfigurationManager {
     /**
      * This method is for watching service status change (service not running) and notify to listeners
      */
-    protected void markServiceNotRunning(){
+    protected synchronized void markServiceNotRunning(){
         ServiceRunningStatus servicePreviousRunningStatus=service.getServiceRunningStatus();
         if(ApplicationConstant.CONSTANT_DEFAULT_ZERO==getGracePeriod()||(getLastRuningtimeWithGracePeriod() >= getLastRuningtimeWithPollingFrequency())) {
             service.setServiceRunningStatus(ServiceRunningStatus.SERVICE_RUNNING_STATUS_NOT_RUNNING);
