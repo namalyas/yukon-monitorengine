@@ -25,7 +25,6 @@ This repo contains service monitor server
 <ul>remove unwanted imports</ul>
 <ul>check java versions</ul>
 <ul>replace 0 with constant</ul>
-<ul>outage time feature</ul>
 <ul>unit tests </ul>
 <ul>yourkit </ul>
 <ul>readme </ul>

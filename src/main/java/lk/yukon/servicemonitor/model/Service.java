@@ -1,5 +1,6 @@
 package lk.yukon.servicemonitor.model;
 
+import lk.yukon.servicemonitor.configuration.ApplicationConstant;
 import lk.yukon.servicemonitor.enums.ServiceProtocolType;
 import lk.yukon.servicemonitor.enums.ServiceRunningStatus;
 import lk.yukon.servicemonitor.exception.UnsupportedServiceParameterException;
@@ -7,7 +8,8 @@ import lk.yukon.servicemonitor.exception.UnsupportedServiceParameterException;
 /**
  * license: BSD - see LICENSE for details
  *
- * Service represent the real world service entity
+ * Service represent the real world service entity.
+ * serviceUID is generated host+"_"+port
  *
  * @author Namal Weheragoda
  * @version 1.0.0
@@ -21,15 +23,14 @@ public class Service {
 
 
     /**
-     * @param serviceUID Unique Id representing the service
      * @param host host of the service
      * @param port port of the service
      */
-    public Service(String serviceUID, String host, int port) throws UnsupportedServiceParameterException {
+    public Service(String host, int port) throws UnsupportedServiceParameterException {
         if(null==serviceUID || null==host || 0==port){
             throw new UnsupportedServiceParameterException("serviceUID :"+serviceUID+", host :"+host+", port:"+port);
         }else{
-            this.serviceUID = serviceUID;
+            setServiceUID(host+ ApplicationConstant.CONSTANT_UNDERSCORE+port);
             this.host = host;
             this.port = port;
             this.serviceRunningStatus=ServiceRunningStatus.SERVICE_RUNNING_STATUS_UNDEFINED;
@@ -41,16 +42,15 @@ public class Service {
 
 
     /**
-     * @param serviceUID Unique Id representing the service
      * @param host host of the service
      * @param port port of the service
      * @param serviceRunningStatus service running status
      */
-    public Service(String serviceUID, String host, int port, ServiceRunningStatus serviceRunningStatus)  throws UnsupportedServiceParameterException {
+    public Service(String host, int port, ServiceRunningStatus serviceRunningStatus)  throws UnsupportedServiceParameterException {
         if(null==serviceUID || null==host || 0==port){
             throw new UnsupportedServiceParameterException("serviceUID :"+serviceUID+", host :"+host+", port:"+port);
         }else {
-            this.serviceUID = serviceUID;
+            setServiceUID(host+ ApplicationConstant.CONSTANT_UNDERSCORE+port);
             this.host = host;
             this.port = port;
             this.serviceRunningStatus = serviceRunningStatus;
@@ -59,17 +59,16 @@ public class Service {
     }
 
     /**
-     * @param serviceUID Unique Id representing the service
      * @param host host of the service
      * @param port port of the service
      * @param serviceRunningStatus service running status
      * @param serviceProtocolType service communicating protocol
      */
-    public Service(String serviceUID, String host, int port, ServiceRunningStatus serviceRunningStatus, ServiceProtocolType serviceProtocolType)  throws UnsupportedServiceParameterException {
+    public Service(String host, int port, ServiceRunningStatus serviceRunningStatus, ServiceProtocolType serviceProtocolType)  throws UnsupportedServiceParameterException {
         if(null==serviceUID || null==host || 0==port){
             throw new UnsupportedServiceParameterException("serviceUID :"+serviceUID+", host :"+host+", port:"+port);
         }else {
-            this.serviceUID = serviceUID;
+            setServiceUID(host+ ApplicationConstant.CONSTANT_UNDERSCORE+port);
             this.host = host;
             this.port = port;
             this.serviceRunningStatus = serviceRunningStatus;
@@ -81,7 +80,7 @@ public class Service {
         return serviceUID;
     }
 
-    public void setServiceUID(String serviceUID) throws UnsupportedServiceParameterException {
+    private void setServiceUID(String serviceUID) throws UnsupportedServiceParameterException {
 
         if(null==serviceUID){
             throw new UnsupportedServiceParameterException("serviceUID :"+serviceUID);

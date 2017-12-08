@@ -11,6 +11,7 @@ package lk.yukon.servicemonitor.configuration;
 public class ApplicationConstant {
     public static final int CONSTANT_DEFAULT_ZERO=0;
     public static final int CONSTANT_MILI_SEC_TO_SEC_MULTIFICATION_FACTOR=1000;
+    public static final String CONSTANT_UNDERSCORE="_";
 
     public static final String CONSTANT_UNSUPPORTED_PARAMETER_MESSAGE="Unsupported parameter :";
     public static final String CONSTANT_UNSUPPORTED_SERVICE_PARAMETER_MESSAGE="Unsupported service parameter :";
