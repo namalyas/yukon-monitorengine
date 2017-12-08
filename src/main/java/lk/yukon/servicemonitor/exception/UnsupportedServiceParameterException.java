@@ -36,4 +36,11 @@ public class UnsupportedServiceParameterException extends UnsupportedParameterEx
     public String getMessage() {
         return this.exceptionMessage.toString();
     }
+
+    @Override
+    public String toString() {
+        return "UnsupportedServiceParameterException{" +
+                "exceptionMessage=" + exceptionMessage +
+                '}';
+    }
 }

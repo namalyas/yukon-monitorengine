@@ -114,4 +114,14 @@ public class ServiceMonitorServer extends Thread {
     public void setServiceConfigurationManagerMap(Map<String, ServiceConfigurationManager> serviceConfigurationManagerMap) {
         this.serviceConfigurationManagerMap = serviceConfigurationManagerMap;
     }
+
+    @Override
+    public String toString() {
+        return "ServiceMonitorServer{" +
+                "isServerRun=" + isServerRun +
+                ", executorThreadPool=" + executorThreadPool +
+                ", serviceConfigurationManagerMap=" + serviceConfigurationManagerMap +
+                ", lastRunningTime=" + lastRunningTime +
+                '}';
+    }
 }

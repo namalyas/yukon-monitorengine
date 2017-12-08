@@ -36,4 +36,10 @@ public class UnsupportedParameterException extends Exception {
         return this.exceptionMessage.toString();
     }
 
+    @Override
+    public String toString() {
+        return "UnsupportedParameterException{" +
+                "exceptionMessage=" + exceptionMessage +
+                '}';
+    }
 }

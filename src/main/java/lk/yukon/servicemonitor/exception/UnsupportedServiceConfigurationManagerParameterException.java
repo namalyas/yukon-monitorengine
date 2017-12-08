@@ -36,4 +36,11 @@ public class UnsupportedServiceConfigurationManagerParameterException extends Un
     public String getMessage() {
         return this.exceptionMessage.toString();
     }
+
+    @Override
+    public String toString() {
+        return "UnsupportedServiceConfigurationManagerParameterException{" +
+                "exceptionMessage=" + exceptionMessage +
+                '}';
+    }
 }

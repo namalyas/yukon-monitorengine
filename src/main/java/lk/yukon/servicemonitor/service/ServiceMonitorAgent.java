@@ -38,4 +38,11 @@ public class ServiceMonitorAgent implements Runnable{
         }
     }
 
+
+    @Override
+    public String toString() {
+        return "ServiceMonitorAgent{" +
+                "serviceConfigurationManager=" + serviceConfigurationManager +
+                '}';
+    }
 }

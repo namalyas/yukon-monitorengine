@@ -15,4 +15,6 @@ public enum ServiceProtocolType {
     SERVICE_PROTOCOL_TYPE_HTTP,
     SERVICE_PROTOCOL_TYPE_FTP,
     SERVICE_PROTOCOL_TYPE_SMTP;
+
+
 }
