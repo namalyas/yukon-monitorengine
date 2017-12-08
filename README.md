@@ -20,10 +20,8 @@ This repo contains service monitor server
 # task to do
 
 <ul>add units in comments</ul>
-<ul>add LOGGERS</ul>
 <ul>check java versions</ul>
 <ul>unit tests </ul>
 <ul>yourkit </ul>
 <ul>readme </ul>
 <ul>server-singleton </ul>
-<ul>String.format for string append </ul>

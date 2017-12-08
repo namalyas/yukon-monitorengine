@@ -2,6 +2,7 @@ package lk.yukon.servicemonitor.service;
 
 import junit.framework.TestCase;
 import lk.yukon.servicemonitor.model.Service;
+import org.apache.log4j.Logger;
 
 import java.util.Date;
 
@@ -16,6 +17,7 @@ import java.util.Date;
  */
 public class ServiceConfigurationManagerTest extends TestCase {
 
+    private static final Logger LOGGER= Logger.getLogger(ServiceConfigurationManagerTest.class);
     /**
      * boundary conditions for getNextRunningTime(currentTimeStamp) method not considering the service outage time
      *
@@ -42,11 +44,13 @@ public class ServiceConfigurationManagerTest extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
+        LOGGER.info(String.format("Calling method - setUp()"));
     }
 
 
 
     public void tearDown() throws Exception {
+        LOGGER.info(String.format("Calling method - tearDown()"));
     }
 
     /**
@@ -54,8 +58,9 @@ public class ServiceConfigurationManagerTest extends TestCase {
      * @throws Exception if AssertionError occurs
      */
     public void testGetNextRunningTimeWithCase1() throws Exception {
+        LOGGER.info(String.format("Calling method - testGetNextRunningTimeWithCase1()"));
         long currentTimeStamp=System.currentTimeMillis();
-        serviceConfigurationManager=new ServiceConfigurationManager(new Service("Google","www.google.com",80),1,0);
+        serviceConfigurationManager=new ServiceConfigurationManager(new Service("www.google.com",80),1,0);
         serviceConfigurationManager.setLastRuningTime(0);
         assertEquals(1000,serviceConfigurationManager.getNextRunningTime(currentTimeStamp));
     }
@@ -65,8 +70,9 @@ public class ServiceConfigurationManagerTest extends TestCase {
      * @throws Exception if AssertionError occurs
      */
     public void testGetNextRunningTimeWithCase2() throws Exception {
+        LOGGER.info(String.format("Calling method - testGetNextRunningTimeWithCase2()"));
         long currentTimeStamp=System.currentTimeMillis();
-        serviceConfigurationManager=new ServiceConfigurationManager(new Service("Google","www.google.com",80),2,2);
+        serviceConfigurationManager=new ServiceConfigurationManager(new Service("www.google.com",80),2,2);
         serviceConfigurationManager.setLastRuningTime(0);
         assertEquals(2000,serviceConfigurationManager.getNextRunningTime(currentTimeStamp));
     }
@@ -77,8 +83,9 @@ public class ServiceConfigurationManagerTest extends TestCase {
      * @throws Exception if AssertionError occurs
      */
     public void testGetNextRunningTimeWithCase3() throws Exception {
+        LOGGER.info(String.format("Calling method - testGetNextRunningTimeWithCase3()"));
         long currentTimeStamp=System.currentTimeMillis();
-        serviceConfigurationManager=new ServiceConfigurationManager(new Service("Google","www.google.com",80),2,3);
+        serviceConfigurationManager=new ServiceConfigurationManager(new Service("www.google.com",80),2,3);
         serviceConfigurationManager.setLastRuningTime(0);
         assertEquals(2000,serviceConfigurationManager.getNextRunningTime(currentTimeStamp));
     }
@@ -90,8 +97,9 @@ public class ServiceConfigurationManagerTest extends TestCase {
      * @throws Exception if AssertionError occurs
      */
     public void testGetNextRunningTimeWithCase4() throws Exception {
+        LOGGER.info(String.format("Calling method - testGetNextRunningTimeWithCase4()"));
         long currentTimeStamp=System.currentTimeMillis();
-        serviceConfigurationManager=new ServiceConfigurationManager(new Service("Google","www.google.com",80),6,3);
+        serviceConfigurationManager=new ServiceConfigurationManager(new Service("www.google.com",80),6,3);
         serviceConfigurationManager.setLastRuningTime(0);
         serviceConfigurationManager.setLastRuningtimeWithPollingFrequency(0);
         serviceConfigurationManager.setLastRuningtimeWithGracePeriod(0);
@@ -105,8 +113,9 @@ public class ServiceConfigurationManagerTest extends TestCase {
      * @throws Exception if AssertionError occurs
      */
     public void testGetNextRunningTimeWithCase5() throws Exception {
+        LOGGER.info(String.format("Calling method - testGetNextRunningTimeWithCase5()"));
         long currentTimeStamp=System.currentTimeMillis();
-        serviceConfigurationManager=new ServiceConfigurationManager(new Service("Google","www.google.com",80),6,3);
+        serviceConfigurationManager=new ServiceConfigurationManager(new Service("www.google.com",80),6,3);
         serviceConfigurationManager.setLastRuningTime(3000);
         serviceConfigurationManager.setLastRuningtimeWithPollingFrequency(0);
         serviceConfigurationManager.setLastRuningtimeWithGracePeriod(3000);
@@ -120,8 +129,9 @@ public class ServiceConfigurationManagerTest extends TestCase {
      * @throws Exception if AssertionError occurs
      */
     public void testGetNextRunningTimeWithCase6() throws Exception {
+        LOGGER.info(String.format("Calling method - testGetNextRunningTimeWithCase6()"));
         long currentTimeStamp=System.currentTimeMillis();
-        serviceConfigurationManager=new ServiceConfigurationManager(new Service("Google","www.google.com",80),6,3);
+        serviceConfigurationManager=new ServiceConfigurationManager(new Service("www.google.com",80),6,3);
         serviceConfigurationManager.setLastRuningTime(6000);
         serviceConfigurationManager.setLastRuningtimeWithPollingFrequency(6000);
         serviceConfigurationManager.setLastRuningtimeWithGracePeriod(3000);
@@ -134,8 +144,9 @@ public class ServiceConfigurationManagerTest extends TestCase {
      * @throws Exception if AssertionError occurs
      */
     public void testGetNextRunningTimeWithCase7() throws Exception {
+        LOGGER.info(String.format("Calling method - testGetNextRunningTimeWithCase7()"));
         long currentTimeStamp=System.currentTimeMillis();
-        serviceConfigurationManager=new ServiceConfigurationManager(new Service("Google","www.google.com",80),6,3);
+        serviceConfigurationManager=new ServiceConfigurationManager(new Service("www.google.com",80),6,3);
         serviceConfigurationManager.setServiceOutageStartTime(currentTimeStamp-1000);
         serviceConfigurationManager.setServiceOutageEndTime(currentTimeStamp+1000);
         assertEquals(currentTimeStamp+1000,serviceConfigurationManager.getNextRunningTime(currentTimeStamp));
@@ -165,8 +176,9 @@ public class ServiceConfigurationManagerTest extends TestCase {
      * @throws Exception if AssertionError occurs
      */
     public void testIsServiceInOutageWithCase1() throws Exception {
+        LOGGER.info(String.format("Calling method - testIsServiceInOutageWithCase1()"));
         long currentTimeStamp=System.currentTimeMillis();
-        serviceConfigurationManager=new ServiceConfigurationManager(new Service("Google","www.google.com",80),6,3);
+        serviceConfigurationManager=new ServiceConfigurationManager(new Service("www.google.com",80),6,3);
         serviceConfigurationManager.setServiceOutageStartTime(currentTimeStamp-1000);
         serviceConfigurationManager.setServiceOutageEndTime(currentTimeStamp+1000);
         assertEquals(false,serviceConfigurationManager.isServiceInOutage(currentTimeStamp-2000));
@@ -179,8 +191,9 @@ public class ServiceConfigurationManagerTest extends TestCase {
      * @throws Exception if AssertionError occurs
      */
     public void testIsServiceInOutageWithCase2() throws Exception {
+        LOGGER.info(String.format("Calling method - testIsServiceInOutageWithCase2()"));
         long currentTimeStamp=System.currentTimeMillis();
-        serviceConfigurationManager=new ServiceConfigurationManager(new Service("Google","www.google.com",80),6,3);
+        serviceConfigurationManager=new ServiceConfigurationManager(new Service("www.google.com",80),6,3);
         serviceConfigurationManager.setServiceOutageStartTime(currentTimeStamp-1000);
         serviceConfigurationManager.setServiceOutageEndTime(currentTimeStamp+1000);
         assertEquals(false,serviceConfigurationManager.isServiceInOutage(currentTimeStamp+2000));
@@ -193,8 +206,9 @@ public class ServiceConfigurationManagerTest extends TestCase {
      * @throws Exception if AssertionError occurs
      */
     public void testIsServiceInOutageWithCase3() throws Exception {
+        LOGGER.info(String.format("Calling method - testIsServiceInOutageWithCase3()"));
         long currentTimeStamp=System.currentTimeMillis();
-        serviceConfigurationManager=new ServiceConfigurationManager(new Service("Google","www.google.com",80),6,3);
+        serviceConfigurationManager=new ServiceConfigurationManager(new Service("www.google.com",80),6,3);
         serviceConfigurationManager.setServiceOutageStartTime(currentTimeStamp-1000);
         serviceConfigurationManager.setServiceOutageEndTime(currentTimeStamp+1000);
         assertEquals(true,serviceConfigurationManager.isServiceInOutage(currentTimeStamp));
