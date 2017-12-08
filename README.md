@@ -29,13 +29,14 @@ Server capabilities are demonstrate in ServiceMonitorServerTest class. please re
 If you want you can test with multiple unit tests other than this you can write your own. (To easy refering purposes Logs ralted only this testcase are set to display in the console. other logs store in log files . refer- log4j.properties)
            
 Apart from thaServiceConfigurationManagerTest class contains TDD approach unit tetst wich are used to build some complex methods ralted to calculate server next running time and serverice outage time. boundary conditions are as follows.    
-Boundary conditions for getNextRunningTime(currentTimeStamp) method not considering the service outage time          
-1)gracePeriod ==0 then return lastRuningtimeWithPollingFrequency+pollingFrequency
-2)pollingFrequency==gracePeriod then return lastRuningtimeWithPollingFrequency+pollingFrequency
-3)pollingFrequency<gracePeriod then return lastRuningtimeWithPollingFrequency+pollingFrequency
-4)pollingFrequency>gracePeriod && lastRuningtimeWithGracePeriod==lastRuningtimeWithPollingFrequency then return lastRuningtimeWithPollingFrequency+pollingFrequency
-5)pollingFrequency>gracePeriod && lastRuningtimeWithGracePeriod>lastRuningtimeWithPollingFrequency then return lastRuningtimeWithPollingFrequency+pollingFrequency
-6)pollingFrequency>gracePeriod && lastRuningtimeWithGracePeriod<lastRuningtimeWithPollingFrequency then return lastRuningtimeWithPollingFrequency+gracePeriod
+Boundary conditions for getNextRunningTime(currentTimeStamp) method not considering the service outage time 
+
+1) gracePeriod ==0 then return lastRuningtimeWithPollingFrequency+pollingFrequency
+2) pollingFrequency==gracePeriod then return lastRuningtimeWithPollingFrequency+pollingFrequency
+3) pollingFrequency<gracePeriod then return lastRuningtimeWithPollingFrequency+pollingFrequency
+4) pollingFrequency>gracePeriod && lastRuningtimeWithGracePeriod==lastRuningtimeWithPollingFrequency then return lastRuningtimeWithPollingFrequency+pollingFrequency
+5) pollingFrequency>gracePeriod && lastRuningtimeWithGracePeriod>lastRuningtimeWithPollingFrequency then return lastRuningtimeWithPollingFrequency+pollingFrequency
+6)  pollingFrequency>gracePeriod && lastRuningtimeWithGracePeriod<lastRuningtimeWithPollingFrequency then return lastRuningtimeWithPollingFrequency+gracePeriod
            
 Boundary conditions for getNextRunningTime(currentTimeStamp) method considering the service outage time          
 7) serviceOutageStartTime > 0 and  serviceOutageEndTime > 0 and serviceOutageStartTime < serviceOutageEndTime and serviceOutageStartTime < currentTimestamp < serviceOutageEndTime  then return serviceOutageEndTime
@@ -56,12 +57,12 @@ Exceptional cases - those cases are already covers in set methods</li>
            
 
 # What Was Done - Extra
-1)ServiceBehaviourAdaptor
-2)TDD approach to build complex logics in simplify way
-3)Exception hirachi for finer exceptions
-4)Eleminate duplicate service addtion by introducing service UUID
-5)Adding extra description field for service description
-6)Adding extra prototype field for service communication prototype
+1) ServiceBehaviourAdaptor
+2) TDD approach to build complex logics in simplify way
+3) Exception hirachi for finer exceptions
+4) Eliminate duplicate service addtion by introducing service UUID
+5) Adding extra description field for service description
+6) Adding extra prototype field for service communication prototype
 
 
 # Future Enhancements
