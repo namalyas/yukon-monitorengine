@@ -15,6 +15,7 @@ This repo contains service monitor server
 <ul>TDD approach to build complex logics in simplify way</ul>
 <ul>Exception hirachi for finer exceptions</ul>
 <ul>eleminate duplicate service addtion by introducing service UUID</ul>
+<ul>adding extra description for service description</ul>
 
 # task to do
 
@@ -29,5 +30,4 @@ This repo contains service monitor server
 <ul>yourkit </ul>
 <ul>readme </ul>
 <ul>server-singleton </ul>
-<ul>service uuid generations host_port- automatically </ul>
 <ul>service extra parameter for desctiption default host:port </ul>

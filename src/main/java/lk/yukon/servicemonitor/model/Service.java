@@ -10,6 +10,7 @@ import lk.yukon.servicemonitor.exception.UnsupportedServiceParameterException;
  *
  * Service represent the real world service entity.
  * serviceUID is generated host+"_"+port
+ * default description is generated host+":"+port
  *
  * @author Namal Weheragoda
  * @version 1.0.0
@@ -17,6 +18,7 @@ import lk.yukon.servicemonitor.exception.UnsupportedServiceParameterException;
 public class Service {
     private String serviceUID;
     private String host;
+    private String description;
     private int port;
     private ServiceRunningStatus serviceRunningStatus;
     private ServiceProtocolType serviceProtocolType;
@@ -33,6 +35,27 @@ public class Service {
             setServiceUID(host+ ApplicationConstant.CONSTANT_UNDERSCORE+port);
             this.host = host;
             this.port = port;
+            setDescription(host+ApplicationConstant.CONSTANT_COLON+port);
+            this.serviceRunningStatus=ServiceRunningStatus.SERVICE_RUNNING_STATUS_UNDEFINED;
+            this.serviceProtocolType=ServiceProtocolType.SERVICE_PROTOCOL_TYPE_TCP;
+        }
+
+
+    }
+
+    /**
+     * @param host host of the service
+     * @param port port of the service
+     * @param description description of the service
+     */
+    public Service(String host, int port,String description) throws UnsupportedServiceParameterException {
+        if(null==serviceUID || null==host || 0==port){
+            throw new UnsupportedServiceParameterException("serviceUID :"+serviceUID+", host :"+host+", port:"+port);
+        }else{
+            setServiceUID(host+ ApplicationConstant.CONSTANT_UNDERSCORE+port);
+            this.host = host;
+            this.port = port;
+            this.description=description;
             this.serviceRunningStatus=ServiceRunningStatus.SERVICE_RUNNING_STATUS_UNDEFINED;
             this.serviceProtocolType=ServiceProtocolType.SERVICE_PROTOCOL_TYPE_TCP;
         }
@@ -53,6 +76,7 @@ public class Service {
             setServiceUID(host+ ApplicationConstant.CONSTANT_UNDERSCORE+port);
             this.host = host;
             this.port = port;
+            setDescription(host+ApplicationConstant.CONSTANT_COLON+port);
             this.serviceRunningStatus = serviceRunningStatus;
             this.serviceProtocolType = ServiceProtocolType.SERVICE_PROTOCOL_TYPE_TCP;
         }
@@ -71,6 +95,7 @@ public class Service {
             setServiceUID(host+ ApplicationConstant.CONSTANT_UNDERSCORE+port);
             this.host = host;
             this.port = port;
+            setDescription(host+ApplicationConstant.CONSTANT_COLON+port);
             this.serviceRunningStatus = serviceRunningStatus;
             this.serviceProtocolType = serviceProtocolType;
         }
@@ -130,18 +155,23 @@ public class Service {
         this.serviceProtocolType = serviceProtocolType;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     @Override
     public String toString() {
         return "Service{" +
                 "serviceUID='" + serviceUID + '\'' +
                 ", host='" + host + '\'' +
+                ", description='" + description + '\'' +
                 ", port=" + port +
                 ", serviceRunningStatus=" + serviceRunningStatus +
                 ", serviceProtocolType=" + serviceProtocolType +
                 '}';
     }
-
-
-
 }
