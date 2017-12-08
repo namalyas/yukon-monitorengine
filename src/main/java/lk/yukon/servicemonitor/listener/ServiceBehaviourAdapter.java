@@ -1,6 +1,7 @@
 package lk.yukon.servicemonitor.listener;
 
 import lk.yukon.servicemonitor.model.Service;
+import org.apache.log4j.Logger;
 
 /**
  * license: BSD - see LICENSE for details
@@ -12,11 +13,14 @@ import lk.yukon.servicemonitor.model.Service;
  */
 public abstract class ServiceBehaviourAdapter implements ServiceBehaviourListener{
 
+    private static final Logger LOGGER= Logger.getLogger(ServiceBehaviourAdapter.class);
     public void serviceUp(Service service) {
+        LOGGER.info(String.format("Calling method - serviceUp(%s)",service));
 
     }
 
     public void serviceDown(Service service) {
+        LOGGER.info(String.format("Calling method - serviceDown(%s)",service));
 
     }
 }
