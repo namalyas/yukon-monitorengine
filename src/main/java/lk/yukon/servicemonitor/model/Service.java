@@ -105,6 +105,12 @@ public class Service {
         return serviceUID;
     }
 
+    /**
+     * this method is private because serviceUID is auto generated
+     *
+     * @param serviceUID auto generated serviceUID = host+"_"+port
+     * @throws UnsupportedServiceParameterException
+     */
     private void setServiceUID(String serviceUID) throws UnsupportedServiceParameterException {
 
         if(null==serviceUID){

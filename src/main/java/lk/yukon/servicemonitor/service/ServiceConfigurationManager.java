@@ -236,7 +236,7 @@ public class ServiceConfigurationManager {
     /**
      * This method is for watching service status change (service running) and notify to listeners
      */
-    public void markServiceRunning(){
+    protected void markServiceRunning(){
         ServiceRunningStatus servicePreviousRunningStatus=service.getServiceRunningStatus();
         if(!servicePreviousRunningStatus.equals(ServiceRunningStatus.SERVICE_RUNNING_STATUS_RUNNING)){
             service.setServiceRunningStatus(ServiceRunningStatus.SERVICE_RUNNING_STATUS_RUNNING);
@@ -249,7 +249,7 @@ public class ServiceConfigurationManager {
     /**
      * This method is for watching service status change (service not running) and notify to listeners
      */
-    public void markServiceNotRunning(){
+    protected void markServiceNotRunning(){
         ServiceRunningStatus servicePreviousRunningStatus=service.getServiceRunningStatus();
         if(ApplicationConstant.CONSTANT_DEFAULT_ZERO==getGracePeriod()||(getLastRuningtimeWithGracePeriod() >= getLastRuningtimeWithPollingFrequency())) {
             service.setServiceRunningStatus(ServiceRunningStatus.SERVICE_RUNNING_STATUS_NOT_RUNNING);
